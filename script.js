@@ -10,7 +10,7 @@ d3.json('data.json').then(data => {
             };
         });
 
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+    const margin = { top: 20, right: 30, bottom: 200, left: 40 };
     const width = 800 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
@@ -52,10 +52,17 @@ d3.json('data.json').then(data => {
         .attr('height', d => height - y(d.points))
         .attr('fill', (d, i) => i === 0 ? 'blue' : 'red');
 
+    const xAxis = d3.axisBottom(x0);
+
     svg.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x0));
+        .call(xAxis)
+        .selectAll('text')
+        .attr('transform', 'rotate(-90)')  // Rotate the text labels
+        .attr('text-anchor', 'end')  // Align the text end
+        .attr('dy', '-0.5em');  // Adjust vertical position
+        
 
     svg.append('g')
         .attr('class', 'axis')
